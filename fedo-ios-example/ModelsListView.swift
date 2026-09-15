@@ -21,8 +21,7 @@ struct ModelsListView: View {
         .overlay { status }
         .navigationTitle("Latest Models")
         .navigationDestination(for: AIModel.self) { model in
-            // ponytail: placeholder until ModelDetailView (ywx.5)
-            Text(model.name)
+            ModelDetailView(model: model)
         }
         .task {
             // `.task` re-runs on every appear (e.g. popping back); only fetch the first time.
