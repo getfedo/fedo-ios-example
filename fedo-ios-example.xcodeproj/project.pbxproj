@@ -12,6 +12,8 @@
 
 /* Begin PBXFileReference section */
 		89861F3F3059283D00166042 /* fedo-ios-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fedo-ios-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		89861F503059300000166042 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		89861F513059300000166042 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -37,9 +39,19 @@
 		89861F363059283D00166042 = {
 			isa = PBXGroup;
 			children = (
+				89861F523059300000166042 /* Config */,
 				89861F413059283D00166042 /* fedo-ios-example */,
 				89861F403059283D00166042 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		89861F523059300000166042 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				89861F503059300000166042 /* Base.xcconfig */,
+				89861F513059300000166042 /* Info.plist */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		89861F403059283D00166042 /* Products */ = {
@@ -257,6 +269,7 @@
 		};
 		89861F4B3059283E00166042 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89861F503059300000166042 /* Base.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -265,6 +278,7 @@
 				DEVELOPMENT_TEAM = QB5ZA9QZU7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Config/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ModelPulse;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -290,6 +304,7 @@
 		};
 		89861F4C3059283E00166042 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89861F503059300000166042 /* Base.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -298,6 +313,7 @@
 				DEVELOPMENT_TEAM = QB5ZA9QZU7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Config/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ModelPulse;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -13,3 +13,6 @@ build/
 
 # macOS
 .DS_Store
+
+# Secrets (copy Config/Secrets.example.xcconfig)
+Config/Secrets.xcconfig

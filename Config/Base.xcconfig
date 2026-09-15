@@ -1,0 +1,8 @@
+// Base settings for the app target.
+// FEDO_API_KEY defaults to empty so clean clones and CI build without a key.
+// Put your real key in the gitignored Secrets.xcconfig (see Secrets.example.xcconfig);
+// the optional include below overrides the default when that file exists.
+
+FEDO_API_KEY =
+
+#include? "Secrets.xcconfig"
