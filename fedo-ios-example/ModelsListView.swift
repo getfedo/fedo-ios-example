@@ -3,6 +3,7 @@
 //  fedo-ios-example
 //
 
+import FedoKit
 import SwiftUI
 
 struct ModelsListView: View {
@@ -12,6 +13,9 @@ struct ModelsListView: View {
     @State private var searchText = ""
     /// Provider display name; `nil` = all providers.
     @State private var selectedProvider: String?
+    @State private var showFeedbackSheet = false
+    // Fedo buttons only with an API key: the uninitialized SDK's sheet renders blank.
+    private let isFedoConfigured = Bundle.main.fedoAPIKey != nil
 
     var body: some View {
         // providerID -> display name: `provider` of the group's first "Provider: Model" name, else the id.
@@ -31,7 +35,7 @@ struct ModelsListView: View {
         .overlay { status(noResults: filtered.isEmpty) }
         .navigationTitle("Latest Models")
         .navigationDestination(for: AIModel.self) { model in
-            ModelDetailView(model: model)
+            ModelDetailView(model: model, provider: providerNames[model.providerID] ?? model.provider)
         }
         .task {
             // `.task` re-runs on every appear (e.g. popping back); only fetch the first time.
@@ -40,6 +44,11 @@ struct ModelsListView: View {
         .refreshable { await load() }
         .searchable(text: $searchText)
         .toolbar { providerMenu(providerNames) }
+        .onChange(of: selectedProvider) { provider in
+            // User-level property: last value wins.
+            if let provider { Fedo.setUserProperty("favorite_provider", value: provider) }
+        }
+        .presentCreateFeedback(isPresented: $showFeedbackSheet)
     }
 
     private func filteredModels(_ providerNames: [String: String]) -> [AIModel] {
@@ -74,13 +83,23 @@ struct ModelsListView: View {
     @ViewBuilder private func status(noResults: Bool) -> some View {
         if models?.isEmpty == false {
             if noResults {
-                StatusView(systemImage: "magnifyingglass", title: "No Results", message: "No models match your search or provider filter.")
+                StatusView(systemImage: "magnifyingglass", title: "No Results", message: "No models match your search or provider filter.") {
+                    if isFedoConfigured {
+                        Button("Missing a model? Request it") { showFeedbackSheet = true }
+                            .buttonStyle(.bordered)
+                    }
+                }
             }
         } else if let errorMessage {
             StatusView(systemImage: "wifi.exclamationmark", title: "Couldn't Load Models", message: errorMessage) {
-                Button("Retry") {
-                    self.errorMessage = nil
-                    Task { await load() }
+                HStack {
+                    Button("Retry") {
+                        self.errorMessage = nil
+                        Task { await load() }
+                    }
+                    if isFedoConfigured {
+                        Button("Report a Problem") { showFeedbackSheet = true }
+                    }
                 }
                 .buttonStyle(.bordered)
             }

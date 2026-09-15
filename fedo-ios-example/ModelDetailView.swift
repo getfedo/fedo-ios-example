@@ -7,6 +7,8 @@ import SwiftUI
 
 struct ModelDetailView: View {
     let model: AIModel
+    /// Display name resolved by the list (`model.provider` can be the lowercase id prefix).
+    let provider: String
 
     var body: some View {
         List {
@@ -14,7 +16,7 @@ struct ModelDetailView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(model.shortName)
                         .font(.title2.bold())
-                    Text(model.provider)
+                    Text(provider)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -71,5 +73,5 @@ struct ModelDetailView: View {
       "architecture": {"input_modalities": ["text", "image", "file"]}}]}
     """
     let model = try! OpenRouter.decodeModels(from: Data(json.utf8))[0]
-    NavigationStack { ModelDetailView(model: model) }
+    NavigationStack { ModelDetailView(model: model, provider: model.provider) }
 }
