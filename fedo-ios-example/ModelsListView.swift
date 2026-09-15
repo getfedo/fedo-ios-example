@@ -26,9 +26,18 @@ struct ModelsListView: View {
         let filtered = filteredModels(providerNames)
 
         // ponytail: the list stays mounted in every state so pull-to-refresh also works on empty/error.
-        List(filtered) { model in
-            NavigationLink(value: model) {
-                ModelRow(model: model, provider: providerNames[model.providerID] ?? model.provider)
+        List {
+            // A failed refresh keeps the loaded list; say so in a row instead of the full-screen error.
+            if let errorMessage, models?.isEmpty == false {
+                Label("Couldn't refresh: \(errorMessage)", systemImage: "exclamationmark.triangle.fill")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .symbolRenderingMode(.multicolor)
+            }
+            ForEach(filtered) { model in
+                NavigationLink(value: model) {
+                    ModelRow(model: model, provider: providerNames[model.providerID] ?? model.provider)
+                }
             }
         }
         .listStyle(.plain)
@@ -92,7 +101,7 @@ struct ModelsListView: View {
             }
         } else if let errorMessage {
             StatusView(systemImage: "wifi.exclamationmark", title: "Couldn't Load Models", message: errorMessage) {
-                HStack {
+                let buttons = Group {
                     Button("Retry") {
                         self.errorMessage = nil
                         Task { await load() }
@@ -100,6 +109,11 @@ struct ModelsListView: View {
                     if isFedoConfigured {
                         Button("Report a Problem") { showFeedbackSheet = true }
                     }
+                }
+                // Side by side when they fit, stacked at large Dynamic Type.
+                ViewThatFits {
+                    HStack { buttons }
+                    VStack { buttons }
                 }
                 .buttonStyle(.bordered)
             }
