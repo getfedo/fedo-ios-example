@@ -2,12 +2,13 @@
 
 ## Supported versions
 
-This is an example app without versioned releases. Only the latest commit on `main` receives security fixes.
+Security fixes go to the latest release and to `main`. Older releases are not supported; update to the latest release.
 
-| Version         | Supported |
-| --------------- | --------- |
-| `main` (latest) | Yes       |
-| Older commits   | No        |
+| Version                  | Supported |
+| ------------------------ | --------- |
+| 0.3.x (latest release)   | Yes       |
+| `main`                   | Yes       |
+| Older releases           | No        |
 
 ## Reporting a vulnerability
 
