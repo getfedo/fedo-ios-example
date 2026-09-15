@@ -22,9 +22,9 @@
 
 /* Begin PBXFileReference section */
 		89861F3F3059283D00166042 /* fedo-ios-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fedo-ios-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		89861F543059310000166042 /* fedo-ios-exampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fedo-ios-exampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89861F503059300000166042 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		89861F513059300000166042 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89861F543059310000166042 /* fedo-ios-exampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fedo-ios-exampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -69,15 +69,6 @@
 			);
 			sourceTree = "<group>";
 		};
-		89861F523059300000166042 /* Config */ = {
-			isa = PBXGroup;
-			children = (
-				89861F503059300000166042 /* Base.xcconfig */,
-				89861F513059300000166042 /* Info.plist */,
-			);
-			path = Config;
-			sourceTree = "<group>";
-		};
 		89861F403059283D00166042 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +76,15 @@
 				89861F543059310000166042 /* fedo-ios-exampleTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		89861F523059300000166042 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				89861F503059300000166042 /* Base.xcconfig */,
+				89861F513059300000166042 /* Info.plist */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
