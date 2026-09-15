@@ -10,8 +10,19 @@
 		89861F4F3059292B00166042 /* FedoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 89861F4E3059292B00166042 /* FedoKit */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		89861F533059310000166042 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 89861F373059283D00166042 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 89861F3E3059283D00166042;
+			remoteInfo = "fedo-ios-example";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		89861F3F3059283D00166042 /* fedo-ios-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fedo-ios-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		89861F543059310000166042 /* fedo-ios-exampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fedo-ios-exampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89861F503059300000166042 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		89861F513059300000166042 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -20,6 +31,11 @@
 		89861F413059283D00166042 /* fedo-ios-example */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "fedo-ios-example";
+			sourceTree = "<group>";
+		};
+		89861F553059310000166042 /* fedo-ios-exampleTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "fedo-ios-exampleTests";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -33,6 +49,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		89861F563059310000166042 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -41,6 +64,7 @@
 			children = (
 				89861F523059300000166042 /* Config */,
 				89861F413059283D00166042 /* fedo-ios-example */,
+				89861F553059310000166042 /* fedo-ios-exampleTests */,
 				89861F403059283D00166042 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,6 +82,7 @@
 			isa = PBXGroup;
 			children = (
 				89861F3F3059283D00166042 /* fedo-ios-example.app */,
+				89861F543059310000166042 /* fedo-ios-exampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -88,6 +113,29 @@
 			productReference = 89861F3F3059283D00166042 /* fedo-ios-example.app */;
 			productType = "com.apple.product-type.application";
 		};
+		89861F573059310000166042 /* fedo-ios-exampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89861F5D3059310000166042 /* Build configuration list for PBXNativeTarget "fedo-ios-exampleTests" */;
+			buildPhases = (
+				89861F593059310000166042 /* Sources */,
+				89861F563059310000166042 /* Frameworks */,
+				89861F583059310000166042 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				89861F5A3059310000166042 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				89861F553059310000166042 /* fedo-ios-exampleTests */,
+			);
+			name = "fedo-ios-exampleTests";
+			packageProductDependencies = (
+			);
+			productName = "fedo-ios-exampleTests";
+			productReference = 89861F543059310000166042 /* fedo-ios-exampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -100,6 +148,10 @@
 				TargetAttributes = {
 					89861F3E3059283D00166042 = {
 						CreatedOnToolsVersion = 26.5;
+					};
+					89861F573059310000166042 = {
+						CreatedOnToolsVersion = 26.5;
+						TestTargetID = 89861F3E3059283D00166042;
 					};
 				};
 			};
@@ -121,12 +173,20 @@
 			projectRoot = "";
 			targets = (
 				89861F3E3059283D00166042 /* fedo-ios-example */,
+				89861F573059310000166042 /* fedo-ios-exampleTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		89861F3D3059283D00166042 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89861F583059310000166042 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -143,7 +203,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		89861F593059310000166042 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		89861F5A3059310000166042 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 89861F3E3059283D00166042 /* fedo-ios-example */;
+			targetProxy = 89861F533059310000166042 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		89861F483059283E00166042 /* Debug */ = {
@@ -337,6 +412,48 @@
 			};
 			name = Release;
 		};
+		89861F5B3059310000166042 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QB5ZA9QZU7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fedo.fedo-ios-exampleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fedo-ios-example.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/fedo-ios-example";
+			};
+			name = Debug;
+		};
+		89861F5C3059310000166042 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QB5ZA9QZU7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.fedo.fedo-ios-exampleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/fedo-ios-example.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/fedo-ios-example";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -354,6 +471,15 @@
 			buildConfigurations = (
 				89861F4B3059283E00166042 /* Debug */,
 				89861F4C3059283E00166042 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		89861F5D3059310000166042 /* Build configuration list for PBXNativeTarget "fedo-ios-exampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				89861F5B3059310000166042 /* Debug */,
+				89861F5C3059310000166042 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
