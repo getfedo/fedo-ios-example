@@ -11,9 +11,7 @@ import SwiftUI
 @main
 struct fedo_ios_exampleApp: App {
     init() {
-        let apiKey = (Bundle.main.object(forInfoDictionaryKey: "FedoAPIKey") as? String ?? "")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !apiKey.isEmpty else {
+        guard let apiKey = Bundle.main.fedoAPIKey else {
             print("[ModelPulse] Fedo not initialized: no API key. Copy Config/Secrets.example.xcconfig to Config/Secrets.xcconfig and set FEDO_API_KEY.")
             return
         }
@@ -28,5 +26,14 @@ struct fedo_ios_exampleApp: App {
         WindowGroup {
             ContentView()
         }
+    }
+}
+
+extension Bundle {
+    /// Fedo API key from Info.plist (`FedoAPIKey`, set by Config/Secrets.xcconfig); nil when missing or empty.
+    var fedoAPIKey: String? {
+        let key = (object(forInfoDictionaryKey: "FedoAPIKey") as? String ?? "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        return key.isEmpty ? nil : key
     }
 }

@@ -14,8 +14,18 @@ struct ContentView: View {
             NavigationStack { ModelsListView() }
                 .tabItem { Label("Models", systemImage: "sparkles") }
             // FeedbacksView pushes its own screens, so it needs its own NavigationStack in a tab.
-            NavigationStack { FeedbacksView() }
-                .tabItem { Label("Roadmap", systemImage: "lightbulb") }
+            NavigationStack {
+                // The uninitialized SDK renders blank, so the app explains setup itself.
+                if Bundle.main.fedoAPIKey == nil {
+                    StatusView(systemImage: "key", title: "Fedo Not Configured", message: "Copy Config/Secrets.example.xcconfig to Config/Secrets.xcconfig, add your Fedo API key, and rebuild.")
+                        .navigationTitle("Roadmap")
+                } else {
+                    FeedbacksView()
+                }
+            }
+            .tabItem { Label("Roadmap", systemImage: "lightbulb") }
+            NavigationStack { SettingsView() }
+                .tabItem { Label("Settings", systemImage: "gearshape") }
         }
     }
 }
