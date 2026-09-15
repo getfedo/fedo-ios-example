@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "fedo_ios_example",
+  "project_id": "576d3b88-9094-447b-904c-0b6770f70c72"
+}
