@@ -60,18 +60,49 @@ This protocol applies when ending a Beads implementation workflow. It is subordi
 
 ## Build & Test
 
-_Add your build and test commands here_
+Requires Xcode 26+. One shared scheme, `fedo-ios-example`, builds the app and runs the unit tests.
 
 ```bash
-# Example:
-# npm install
-# npm test
+# Build: prints only warnings and errors; keep it at zero warnings
+xcodebuild -scheme fedo-ios-example -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO -quiet build
+
+# Unit tests: any installed iPhone simulator name works
+xcodebuild -scheme fedo-ios-example -destination 'platform=iOS Simulator,name=iPhone 17' CODE_SIGNING_ALLOWED=NO -quiet test
 ```
+
+Tests use Swift Testing (`import Testing`, `@Test`, `#expect`), not XCTest. They decode an inline OpenRouter JSON fixture through `OpenRouter.decodeModels(from:)` and never touch the network.
+
+CI: `.github/workflows/ci.yml` runs the same test command on macOS 26 / Xcode 26.5.
 
 ## Architecture Overview
 
-_Add a brief overview of your project architecture_
+ModelPulse is a SwiftUI demo of the Fedo iOS SDK (`FedoKit`, SPM, pinned to `0.3.0-beta.1`). It lists the newest AI models from the public OpenRouter API (`GET https://openrouter.ai/api/v1/models`, no key) and adds Fedo at natural moments. App sources live in `fedo-ios-example/`.
+
+- `fedo_ios_exampleApp.swift`: `@main`; initializes Fedo once in `init()`; defines `Bundle.fedoAPIKey` (Info.plist `FedoAPIKey`, trimmed, `nil` when empty).
+- `ContentView.swift`: root `TabView` with Models, Roadmap and Settings tabs, each in its own `NavigationStack`.
+- `ModelsListView.swift`: fetch with loading/error/empty states and pull-to-refresh, search, provider filter menu, Fedo feedback sheet, `favorite_provider` user property; also `ModelRow`.
+- `ModelDetailView.swift`: pricing, context length, release date, input modalities, copyable model ID.
+- `SettingsView.swift`: Fedo setup status, demo sign-in/out that sets Fedo identity (persisted with `@AppStorage`), About links, app version.
+- `AIModel.swift` + `StatusView.swift`: `AIModel` Decodable model and formatters, `OpenRouter.fetchModels()` / `decodeModels(from:)`; `StatusView` is the shared icon/title/message/actions view for empty, error and setup states.
+- `Config/` (repo root): `Base.xcconfig` (app target base config, `FEDO_API_KEY`, optional `#include? "Secrets.xcconfig"`), `Secrets.example.xcconfig`, `Info.plist` (`FedoAPIKey = $(FEDO_API_KEY)`).
+- `fedo-ios-exampleTests/AIModelTests.swift`: decoding, sort order and formatter tests.
+
+Where each FedoKit API is used:
+
+- `Fedo.initialize(apiKey:config:)`: `fedo_ios_exampleApp.init()`, only when a key exists (`.debug` logs in DEBUG, `.none` in release).
+- `FeedbacksView()`: Roadmap tab in `ContentView`; without a key a "Fedo Not Configured" `StatusView` shows instead, because the uninitialized SDK renders blank.
+- `.presentCreateFeedback(isPresented:)`: `ModelsListView`, from "Missing a model? Request it" (no results) and "Report a Problem" (load error); buttons hidden without a key.
+- `Fedo.setUserProperty("favorite_provider", value:)`: `ModelsListView`, when a provider filter is picked.
+- `Fedo.setUserID` / `Fedo.setUserDisplayName` / `Fedo.setUserEmail`: `SettingsView` sign-in (ID is `"demo-" + email`; real apps pass their backend user ID).
+- `Fedo.logout()`: `SettingsView` sign-out.
 
 ## Conventions & Patterns
 
-_Add your project-specific conventions here_
+- **iOS 16.0 deployment target**: no iOS 17+ APIs (`ContentUnavailableView`, `@Observable`, `onChange(of:initial:)`, `navigationDestination(item:)`, ...) without an `#available` check. Use `@State`, `ObservableObject` and `.task`.
+- **Swift 6 with default MainActor isolation** (`SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`, approachable concurrency): code is main-actor unless marked otherwise. Models and networking are `nonisolated` (+ `Sendable`); off-main work uses `@concurrent` (see `OpenRouter.fetchModels()`).
+- **SwiftUI + Foundation only**: no dependencies beyond FedoKit.
+- **Synchronized folders**: `fedo-ios-example/` and `fedo-ios-exampleTests/` are file-system synchronized groups, so new `.swift` files compile without a `project.pbxproj` edit. Keep non-source files (xcconfig, plist, fixtures) out of them unless you handle target membership.
+- **Zero warnings**: the build command above must report no warnings.
+- **Keep the example minimal and readable**: it is sample code for SDK integrators. Fewest files, no speculative abstractions, short comments only where a choice is not obvious.
+- **API key**: `Config/Base.xcconfig` leaves `FEDO_API_KEY` empty; put a key in the gitignored `Config/Secrets.xcconfig` (copy `Config/Secrets.example.xcconfig`). Without a key the app still builds, runs and tests, and Fedo UI shows setup guidance. Never commit API keys. Read the key only through `Bundle.main.fedoAPIKey`.
+- **`project.pbxproj`**: Xcode may reorder objects when it opens the project; commit order-only changes separately from real changes.
