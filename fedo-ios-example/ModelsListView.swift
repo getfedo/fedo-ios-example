@@ -9,16 +9,26 @@ struct ModelsListView: View {
     /// `nil` until the first successful load.
     @State private var models: [AIModel]?
     @State private var errorMessage: String?
+    @State private var searchText = ""
+    /// Provider display name; `nil` = all providers.
+    @State private var selectedProvider: String?
 
     var body: some View {
+        // providerID -> display name: `provider` of the group's first "Provider: Model" name, else the id.
+        // Merges ids sharing a name (`meta` + `meta-llama` -> "Meta"); prefix-less names like "Claude Opus 5" get "Anthropic".
+        let providerNames = Dictionary(grouping: models ?? [], by: \.providerID).mapValues { group in
+            group.first { $0.name.contains(": ") }?.provider ?? group[0].providerID
+        }
+        let filtered = filteredModels(providerNames)
+
         // ponytail: the list stays mounted in every state so pull-to-refresh also works on empty/error.
-        List(models ?? []) { model in
+        List(filtered) { model in
             NavigationLink(value: model) {
-                ModelRow(model: model)
+                ModelRow(model: model, provider: providerNames[model.providerID] ?? model.provider)
             }
         }
         .listStyle(.plain)
-        .overlay { status }
+        .overlay { status(noResults: filtered.isEmpty) }
         .navigationTitle("Latest Models")
         .navigationDestination(for: AIModel.self) { model in
             ModelDetailView(model: model)
@@ -28,11 +38,44 @@ struct ModelsListView: View {
             if models == nil { await load() }
         }
         .refreshable { await load() }
+        .searchable(text: $searchText)
+        .toolbar { providerMenu(providerNames) }
     }
 
-    @ViewBuilder private var status: some View {
+    private func filteredModels(_ providerNames: [String: String]) -> [AIModel] {
+        let query = searchText.trimmingCharacters(in: .whitespaces)
+        return (models ?? []).filter { model in
+            (selectedProvider == nil || providerNames[model.providerID] == selectedProvider)
+                && (query.isEmpty || model.name.localizedCaseInsensitiveContains(query)
+                    || model.id.localizedCaseInsensitiveContains(query))
+        }
+    }
+
+    private func providerMenu(_ providerNames: [String: String]) -> some View {
+        // Display name -> model count, most models first.
+        let counts = (models ?? []).reduce(into: [String: Int]()) { counts, model in
+            counts[providerNames[model.providerID] ?? model.provider, default: 0] += 1
+        }
+        .sorted { $0.value != $1.value ? $0.value > $1.value : $0.key < $1.key }
+
+        return Menu {
+            Picker("Provider", selection: $selectedProvider) {
+                Text("All Providers").tag(String?.none)
+                ForEach(counts, id: \.key) { provider in
+                    Text("\(provider.key) (\(provider.value))").tag(String?.some(provider.key))
+                }
+            }
+        } label: {
+            Label("Filter by provider", systemImage: selectedProvider == nil
+                ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+        }
+    }
+
+    @ViewBuilder private func status(noResults: Bool) -> some View {
         if models?.isEmpty == false {
-            EmptyView()
+            if noResults {
+                StatusView(systemImage: "magnifyingglass", title: "No Results", message: "No models match your search or provider filter.")
+            }
         } else if let errorMessage {
             StatusView(systemImage: "wifi.exclamationmark", title: "Couldn't Load Models", message: errorMessage) {
                 Button("Retry") {
@@ -63,12 +106,13 @@ struct ModelsListView: View {
 
 private struct ModelRow: View {
     let model: AIModel
+    let provider: String
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(model.shortName)
                 .font(.headline)
-            Text("\(model.provider) · \(model.createdDate, format: .relative(presentation: .named))")
+            Text("\(provider) · \(model.createdDate, format: .relative(presentation: .named))")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
             Text(details)
