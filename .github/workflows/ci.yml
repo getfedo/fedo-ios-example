@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # Installed Xcode versions and simulators on this image:
+  # https://github.com/actions/runner-images/blob/main/images/macos/macos-26-arm64-Readme.md
+  XCODE_VERSION: "26.5"
+  PACKAGES_DIR: build/SourcePackages
+
+jobs:
+  test:
+    name: Build and test
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Select Xcode
+        run: |
+          sudo xcode-select -s "/Applications/Xcode_${XCODE_VERSION}.app"
+          xcodebuild -version
+
+      - name: Cache Swift packages
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ env.PACKAGES_DIR }}
+          key: spm-${{ runner.os }}-${{ hashFiles('fedo-ios-example.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+          restore-keys: spm-${{ runner.os }}-
+
+      - name: Build and test
+        run: |
+          xcodebuild test \
+            -scheme fedo-ios-example \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
+            -clonedSourcePackagesDirPath "$PACKAGES_DIR" \
+            CODE_SIGNING_ALLOWED=NO
