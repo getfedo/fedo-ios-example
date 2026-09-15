@@ -1,0 +1,15 @@
+{
+  "originHash" : "11836a142c46c23bb31404f91757767fab686351448b01be5383db72d25232f0",
+  "pins" : [
+    {
+      "identity" : "fedo-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/getfedo/fedo-ios",
+      "state" : {
+        "branch" : "0.3.0-beta.1",
+        "revision" : "f40f475efc25248992f1ea860a219a04b77dec4c"
+      }
+    }
+  ],
+  "version" : 3
+}
