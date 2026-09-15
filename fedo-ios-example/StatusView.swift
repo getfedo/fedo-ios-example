@@ -13,6 +13,16 @@ struct StatusView<Actions: View>: View {
     @ViewBuilder var actions: Actions
 
     var body: some View {
+        // At large Dynamic Type sizes the content can exceed the available height (e.g. inside
+        // a List .overlay); fall back to a scroll view instead of letting text truncate.
+        ViewThatFits(in: .vertical) {
+            content
+            ScrollView { content }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var content: some View {
         VStack(spacing: 12) {
             Image(systemName: systemImage)
                 .font(.largeTitle)
@@ -20,16 +30,17 @@ struct StatusView<Actions: View>: View {
                 .accessibilityHidden(true)
             Text(title)
                 .font(.headline)
+                .fixedSize(horizontal: false, vertical: true)
             if let message {
                 Text(message)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             actions
         }
         .multilineTextAlignment(.center)
         .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
