@@ -41,7 +41,7 @@ Captured on an iPhone 17 simulator without a Fedo API key.
 - Xcode 26 or later
 - iOS 16 or later
 - Swift 6
-- [FedoKit](https://github.com/getfedo/fedo-ios) `0.3.0-beta.1`, resolved by Xcode through Swift Package Manager
+- [FedoKit](https://github.com/getfedo/fedo-ios) `0.4.0-beta.1`, resolved by Xcode through Swift Package Manager
 
 ## Quick start
 
@@ -63,8 +63,8 @@ No key yet? The app still builds and runs: the models list and detail work, the 
 | API | File | What it does |
 | --- | --- | --- |
 | `Fedo.initialize(apiKey:config:)` | [`fedo_ios_exampleApp.swift`](fedo-ios-example/fedo_ios_exampleApp.swift) | Initializes the SDK once at launch with the key from Info.plist, with debug logging in Debug builds. Skipped when no key is configured. |
-| `FeedbacksView()` | [`ContentView.swift`](fedo-ios-example/ContentView.swift) | The Roadmap tab: the full feedback board. It pushes its own screens, so the tab wraps it in its own `NavigationStack`. |
-| `.presentCreateFeedback(isPresented:)` | [`ModelsListView.swift`](fedo-ios-example/ModelsListView.swift) | Opens the feedback submission sheet from "Missing a model? Request it" in the No Results state and "Report a Problem" in the load error state. Both buttons appear only when a key is configured. |
+| `FedoFeedbackView()` | [`ContentView.swift`](fedo-ios-example/ContentView.swift) | The Roadmap tab: the full feedback board. It pushes its own screens, so the tab wraps it in its own `NavigationStack`. |
+| `.presentFedoCreateFeedback(isPresented:)` | [`ModelsListView.swift`](fedo-ios-example/ModelsListView.swift) | Opens the feedback submission sheet from "Missing a model? Request it" in the No Results state and "Report a Problem" in the load error state. Both buttons appear only when a key is configured. |
 | `Fedo.setUserProperty("favorite_provider", value:)` | [`ModelsListView.swift`](fedo-ios-example/ModelsListView.swift) | Records the provider picked in the filter menu as a user property (last value wins). |
 | `Fedo.setUserID(_:)`<br>`Fedo.setUserDisplayName(_:)`<br>`Fedo.setUserEmail(_:)` | [`SettingsView.swift`](fedo-ios-example/SettingsView.swift) | Demo sign-in: identifies the user. Feedback, votes and comments made as a guest move to the signed-in account. |
 | `Fedo.logout()` | [`SettingsView.swift`](fedo-ios-example/SettingsView.swift) | Demo sign-out: clears the identity and starts a new anonymous user. |

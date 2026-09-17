@@ -20,7 +20,7 @@ struct ContentView: View {
                     StatusView(systemImage: "key", title: "Fedo Not Configured", message: "Copy Config/Secrets.example.xcconfig to Config/Secrets.xcconfig, add your Fedo API key, and rebuild.")
                         .navigationTitle("Roadmap")
                 } else {
-                    FeedbacksView()
+                    FedoFeedbackView()
                 }
             }
             .tabItem { Label("Roadmap", systemImage: "lightbulb") }

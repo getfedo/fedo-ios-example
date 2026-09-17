@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		89861F4F3059292B00166042 /* FedoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 89861F4E3059292B00166042 /* FedoKit */; };
+		897D21CD305BB00000C6D269 /* FedoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 897D21CC305BB00000C6D269 /* FedoKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -19,6 +19,19 @@
 			remoteInfo = "fedo-ios-example";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8960FCAC305995E000382499 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		89861F3F3059283D00166042 /* fedo-ios-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fedo-ios-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89861F4F3059292B00166042 /* FedoKit in Frameworks */,
+				897D21CD305BB00000C6D269 /* FedoKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,12 +72,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8960FCB8305996A000382499 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		89861F363059283D00166042 = {
 			isa = PBXGroup;
 			children = (
 				89861F523059300000166042 /* Config */,
 				89861F413059283D00166042 /* fedo-ios-example */,
 				89861F553059310000166042 /* fedo-ios-exampleTests */,
+				8960FCB8305996A000382499 /* Frameworks */,
 				89861F403059283D00166042 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,6 +118,7 @@
 				89861F3B3059283D00166042 /* Sources */,
 				89861F3C3059283D00166042 /* Frameworks */,
 				89861F3D3059283D00166042 /* Resources */,
+				8960FCAC305995E000382499 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -107,7 +129,7 @@
 			);
 			name = "fedo-ios-example";
 			packageProductDependencies = (
-				89861F4E3059292B00166042 /* FedoKit */,
+				897D21CC305BB00000C6D269 /* FedoKit */,
 			);
 			productName = "fedo-ios-example";
 			productReference = 89861F3F3059283D00166042 /* fedo-ios-example.app */;
@@ -165,7 +187,7 @@
 			mainGroup = 89861F363059283D00166042;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				89861F4D3059292B00166042 /* XCRemoteSwiftPackageReference "fedo-ios" */,
+				897D21CB305BB00000C6D269 /* XCRemoteSwiftPackageReference "fedo-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 89861F403059283D00166042 /* Products */;
@@ -487,20 +509,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		89861F4D3059292B00166042 /* XCRemoteSwiftPackageReference "fedo-ios" */ = {
+		897D21CB305BB00000C6D269 /* XCRemoteSwiftPackageReference "fedo-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getfedo/fedo-ios";
 			requirement = {
 				kind = exactVersion;
-				version = "0.3.0-beta.1";
+				version = "0.4.0-beta.1";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		89861F4E3059292B00166042 /* FedoKit */ = {
+		897D21CC305BB00000C6D269 /* FedoKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 89861F4D3059292B00166042 /* XCRemoteSwiftPackageReference "fedo-ios" */;
+			package = 897D21CB305BB00000C6D269 /* XCRemoteSwiftPackageReference "fedo-ios" */;
 			productName = FedoKit;
 		};
 /* End XCSwiftPackageProductDependency section */

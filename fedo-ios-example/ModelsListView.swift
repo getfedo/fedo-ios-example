@@ -57,7 +57,7 @@ struct ModelsListView: View {
             // User-level property: last value wins.
             if let provider { Fedo.setUserProperty("favorite_provider", value: provider) }
         }
-        .presentCreateFeedback(isPresented: $showFeedbackSheet)
+        .presentFedoCreateFeedback(isPresented: $showFeedbackSheet)
     }
 
     private func filteredModels(_ providerNames: [String: String]) -> [AIModel] {

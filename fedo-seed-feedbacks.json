@@ -1,0 +1,113 @@
+{
+  "board": "ModelPulse demo",
+  "note": "Seed data for the ModelPulse Fedo demo board. Status values match FedoKit raw values: in_review, planned, in_progress, done, closed (closed = declined).",
+  "feedbacks": [
+    {
+      "title": "Search models by name",
+      "description": "With 400+ models in the list it takes forever to scroll to the one I want. A search bar that matches model names (and ideally the model ID like anthropic/claude-opus-5) would make the app much faster to use.",
+      "status": "done",
+      "votes": 48,
+      "createdAt": "2026-07-02T09:14:00Z",
+      "comments": [
+        { "author": "Lina K.", "isTeam": false, "body": "Yes please, I mostly look up the same 3-4 models every day." },
+        { "author": "ModelPulse team", "isTeam": true, "body": "Shipped in 0.3.0. Search matches both the display name and the model ID." }
+      ]
+    },
+    {
+      "title": "Filter by provider",
+      "description": "I only care about a couple of providers. A way to show just Anthropic, OpenAI or Google models (with a count per provider) would cut the noise a lot.",
+      "status": "done",
+      "votes": 37,
+      "createdAt": "2026-07-05T16:40:00Z",
+      "comments": [
+        { "author": "Omar H.", "isTeam": false, "body": "Also useful to see how many models each provider has at a glance." },
+        { "author": "ModelPulse team", "isTeam": true, "body": "Shipped in 0.3.0: tap the filter icon on the Latest Models screen. Counts are shown next to each provider." }
+      ]
+    },
+    {
+      "title": "Dark mode",
+      "description": "I check new releases at night and the bright white list is painful. Please support the system dark appearance.",
+      "status": "done",
+      "votes": 29,
+      "createdAt": "2026-07-09T22:03:00Z",
+      "comments": [
+        { "author": "ModelPulse team", "isTeam": true, "body": "Done. The app follows your system appearance setting." }
+      ]
+    },
+    {
+      "title": "Compare two models side by side",
+      "description": "When a new model drops I want to compare it with the one I use today: input/output price per 1M tokens, context length and input modalities in two columns. Picking models from the list and tapping Compare would be ideal.",
+      "status": "in_progress",
+      "votes": 64,
+      "createdAt": "2026-07-14T11:25:00Z",
+      "comments": [
+        { "author": "Sara M.", "isTeam": false, "body": "This is the #1 thing I'm missing. Even just price and context would be enough for a first version." },
+        { "author": "Dev P.", "isTeam": false, "body": "Would love a 'cheaper alternative' hint too, but compare alone is great." },
+        { "author": "ModelPulse team", "isTeam": true, "body": "We're building this now. First version compares pricing, context length and modalities for two models." }
+      ]
+    },
+    {
+      "title": "Save favorite models",
+      "description": "Let me star models so they show up in a Favorites section at the top of the list. Right now I search for the same models every time I open the app.",
+      "status": "in_progress",
+      "votes": 41,
+      "createdAt": "2026-07-18T08:50:00Z",
+      "comments": [
+        { "author": "Jonas W.", "isTeam": false, "body": "Syncing favorites across devices would be a bonus." },
+        { "author": "ModelPulse team", "isTeam": true, "body": "In progress. Favorites will be stored on device first; sync may come later." }
+      ]
+    },
+    {
+      "title": "Price drop alerts",
+      "description": "Notify me when a model I follow gets cheaper (input or output price per 1M tokens). Providers change prices often and I only notice weeks later.",
+      "status": "in_review",
+      "votes": 33,
+      "createdAt": "2026-07-22T13:10:00Z",
+      "comments": [
+        { "author": "Priya S.", "isTeam": false, "body": "A weekly digest would work for me too, doesn't have to be instant." },
+        { "author": "ModelPulse team", "isTeam": true, "body": "Reviewing this. Alerts need background refresh and notifications, so we're checking how reliable that can be on iOS." }
+      ]
+    },
+    {
+      "title": "Sort by price or context length",
+      "description": "Newest first is great for discovery, but sometimes I want the cheapest models or the largest context window first. A sort option next to the provider filter would help.",
+      "status": "in_review",
+      "votes": 26,
+      "createdAt": "2026-07-27T10:05:00Z",
+      "comments": [
+        { "author": "Marco R.", "isTeam": false, "body": "Sorting by output price matters more to me than input price." }
+      ]
+    },
+    {
+      "title": "Show benchmark scores",
+      "description": "Pricing and context are useful, but I'd like to see a couple of well-known benchmark scores on the detail screen so I can judge quality, not just cost.",
+      "status": "in_review",
+      "votes": 19,
+      "createdAt": "2026-08-03T17:45:00Z",
+      "comments": [
+        { "author": "ModelPulse team", "isTeam": true, "body": "Looking into data sources. OpenRouter's models API doesn't include benchmarks, so we'd need a second source we can trust and credit." }
+      ]
+    },
+    {
+      "title": "Chat with a model inside the app",
+      "description": "Add a playground where I can send a prompt to any model from the detail screen and see the response.",
+      "status": "closed",
+      "votes": 22,
+      "createdAt": "2026-08-10T19:30:00Z",
+      "comments": [
+        { "author": "Ali T.", "isTeam": false, "body": "Would be handy for quick tests." },
+        { "author": "ModelPulse team", "isTeam": true, "body": "Declined for now. Running prompts needs API keys and paid usage per provider, which is outside what ModelPulse is for: tracking and comparing models. The detail screen links you to the model ID so you can try it in your own tools." }
+      ]
+    },
+    {
+      "title": "Android version",
+      "description": "Our team is split between iPhone and Android. Please release ModelPulse for Android too.",
+      "status": "closed",
+      "votes": 15,
+      "createdAt": "2026-08-21T07:55:00Z",
+      "comments": [
+        { "author": "ModelPulse team", "isTeam": true, "body": "Declined. ModelPulse is the iOS example app for the Fedo SDK, so it stays iOS-only. Fedo also has an Android SDK if you want to build something similar." }
+      ]
+    }
+  ]
+}
