@@ -77,23 +77,6 @@ Fedo API keys are client-side keys: they are meant to ship inside your app. This
 
 `Config/Secrets.xcconfig` is gitignored only to keep your key out of git and out of this public repository. Never paste keys in issues, pull requests or logs.
 
-## Project structure
-
-```text
-.
-├── fedo-ios-example/
-│   ├── fedo_ios_exampleApp.swift   # @main, Fedo.initialize
-│   ├── ContentView.swift           # Tabs: Models, Roadmap, Settings
-│   ├── ModelsListView.swift        # List, search, provider filter, feedback sheet
-│   ├── ModelDetailView.swift       # Model detail screen
-│   ├── StatusView.swift            # Shared empty and error state view
-│   ├── SettingsView.swift          # Demo sign-in/out, Fedo SDK status
-│   └── AIModel.swift               # OpenRouter model type, formatters, fetch
-├── fedo-ios-exampleTests/          # Swift Testing unit tests
-├── Config/                         # xcconfig files and Info.plist for the API key
-└── docs/images/                    # README screenshots
-```
-
 ## Running tests
 
 In Xcode, press Cmd+U. From the command line, run the same command CI runs:
@@ -122,5 +105,5 @@ This example is available under the [MIT License](LICENSE). FedoKit is distribut
 ## Links
 
 - Fedo: https://getfedo.com
-- Documentation: https://docs.getfedo.com/next/guide/getting-started/
+- Documentation: https://docs.getfedo.com/guide/getting-started/
 - iOS SDK: https://github.com/getfedo/fedo-ios
