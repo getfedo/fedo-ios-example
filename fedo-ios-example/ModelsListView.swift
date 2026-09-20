@@ -24,7 +24,8 @@ struct ModelsListView: View {
         let providerNames = ModelFilter.providerNames(models ?? [])
         let filtered = ModelFilter.filter(models ?? [], search: searchText, providerID: selectedProvider)
 
-        // ponytail: the list stays mounted in every state so pull-to-refresh also works on empty/error.
+        // ponytail: the list stays mounted in every state so the status views can sit in an .overlay.
+        // With zero rows a plain List doesn't bounce, so those states need their own refresh button.
         List {
             // A failed refresh keeps the loaded list; say so in a row instead of the full-screen error.
             if let errorMessage, models?.isEmpty == false {
@@ -104,7 +105,10 @@ struct ModelsListView: View {
         } else if models == nil {
             ProgressView()
         } else {
-            StatusView(systemImage: "tray", title: "No Models", message: "OpenRouter returned no models. Pull to refresh.")
+            StatusView(systemImage: "tray", title: "No Models", message: "OpenRouter returned no models.") {
+                Button("Refresh") { Task { await load() } }
+                    .buttonStyle(.bordered)
+            }
         }
     }
 
