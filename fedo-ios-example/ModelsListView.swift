@@ -11,19 +11,18 @@ struct ModelsListView: View {
     @State private var models: [AIModel]?
     @State private var errorMessage: String?
     @State private var searchText = ""
-    /// Provider display name; `nil` = all providers.
+    /// `ModelFilter.Provider.id`; `nil` = all providers. An id, not a display name, so a refresh
+    /// that renames a provider cannot leave the filter matching nothing.
     @State private var selectedProvider: String?
     @State private var showFeedbackSheet = false
+    /// The one in-flight load; see `load()`.
+    @State private var loadTask: Task<Void, Never>?
     // Fedo buttons only with an API key: the uninitialized SDK's sheet renders blank.
     private let isFedoConfigured = Bundle.main.fedoAPIKey != nil
 
     var body: some View {
-        // providerID -> display name: `provider` of the group's first "Provider: Model" name, else the id.
-        // Merges ids sharing a name (`meta` + `meta-llama` -> "Meta"); prefix-less names like "Claude Opus 5" get "Anthropic".
-        let providerNames = Dictionary(grouping: models ?? [], by: \.providerID).mapValues { group in
-            group.first { $0.name.contains(": ") }?.provider ?? group[0].providerID
-        }
-        let filtered = filteredModels(providerNames)
+        let providerNames = ModelFilter.providerNames(models ?? [])
+        let filtered = ModelFilter.filter(models ?? [], search: searchText, providerID: selectedProvider)
 
         // ponytail: the list stays mounted in every state so pull-to-refresh also works on empty/error.
         List {
@@ -52,35 +51,20 @@ struct ModelsListView: View {
         }
         .refreshable { await load() }
         .searchable(text: $searchText)
-        .toolbar { providerMenu(providerNames) }
+        .toolbar { providerMenu }
         .onChange(of: selectedProvider) { provider in
-            // User-level property: last value wins.
-            if let provider { Fedo.setUserProperty("favorite_provider", value: provider) }
+            // User-level property: last value wins. Report the display name, not the internal id.
+            if let provider { Fedo.setUserProperty("favorite_provider", value: providerNames[provider] ?? provider) }
         }
         .presentFedoCreateFeedback(isPresented: $showFeedbackSheet)
     }
 
-    private func filteredModels(_ providerNames: [String: String]) -> [AIModel] {
-        let query = searchText.trimmingCharacters(in: .whitespaces)
-        return (models ?? []).filter { model in
-            (selectedProvider == nil || providerNames[model.providerID] == selectedProvider)
-                && (query.isEmpty || model.name.localizedCaseInsensitiveContains(query)
-                    || model.id.localizedCaseInsensitiveContains(query))
-        }
-    }
-
-    private func providerMenu(_ providerNames: [String: String]) -> some View {
-        // Display name -> model count, most models first.
-        let counts = (models ?? []).reduce(into: [String: Int]()) { counts, model in
-            counts[providerNames[model.providerID] ?? model.provider, default: 0] += 1
-        }
-        .sorted { $0.value != $1.value ? $0.value > $1.value : $0.key < $1.key }
-
-        return Menu {
+    private var providerMenu: some View {
+        Menu {
             Picker("Provider", selection: $selectedProvider) {
                 Text("All Providers").tag(String?.none)
-                ForEach(counts, id: \.key) { provider in
-                    Text("\(provider.key) (\(provider.value))").tag(String?.some(provider.key))
+                ForEach(ModelFilter.providers(models ?? [])) { provider in
+                    Text("\(provider.name) (\(provider.count))").tag(String?.some(provider.id))
                 }
             }
         } label: {
@@ -124,11 +108,28 @@ struct ModelsListView: View {
         }
     }
 
-    /// Keeps already loaded models when a refresh fails; ignores cancellation.
+    /// Runs one fetch at a time: a new call cancels the in-flight one and queues behind it, so the
+    /// newest result always wins and every caller (`.task`, `.refreshable`, Retry) awaits its own.
     private func load() async {
+        let previous = loadTask
+        previous?.cancel()
+        let task = Task {
+            await previous?.value
+            await fetchModels()
+        }
+        loadTask = task
+        await task.value
+    }
+
+    /// Keeps already loaded models when a refresh fails; ignores cancellation.
+    private func fetchModels() async {
         do {
             models = try await OpenRouter.fetchModels()
             errorMessage = nil
+            // A provider can vanish between refreshes; don't leave a filter that matches nothing.
+            if let selectedProvider, !ModelFilter.providers(models ?? []).contains(where: { $0.id == selectedProvider }) {
+                self.selectedProvider = nil
+            }
         } catch is CancellationError {
         } catch let error as URLError where error.code == .cancelled {
         } catch {

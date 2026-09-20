@@ -38,7 +38,8 @@ struct SettingsView: View {
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
                     Button("Sign In", action: signIn)
-                        .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty || !email.contains("@"))
+                        .disabled(!isFedoConfigured
+                            || name.trimmingCharacters(in: .whitespaces).isEmpty || !email.contains("@"))
                 } else {
                     LabeledContent("Name", value: userName)
                     LabeledContent("Email", value: userEmail)
@@ -47,7 +48,12 @@ struct SettingsView: View {
             } header: {
                 Text("Demo account")
             } footer: {
-                Text("Demo only, no backend. Feedback, votes and comments you made as a guest move to this account when you sign in. Signing out starts a new guest.")
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Demo only, no backend. Feedback, votes and comments you made as a guest move to this account when you sign in. Signing out starts a new guest.")
+                    if !isFedoConfigured {
+                        Text("Signing in needs a Fedo API key: without one the SDK's identity calls do nothing.")
+                    }
+                }
             }
 
             Section("About") {

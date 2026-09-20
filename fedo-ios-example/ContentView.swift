@@ -13,7 +13,7 @@ struct ContentView: View {
         TabView {
             NavigationStack { ModelsListView() }
                 .tabItem { Label("Models", systemImage: "sparkles") }
-            // FeedbacksView pushes its own screens, so it needs its own NavigationStack in a tab.
+            // FedoFeedbackView pushes its own screens, so it needs its own NavigationStack in a tab.
             NavigationStack {
                 // The uninitialized SDK renders blank, so the app explains setup itself.
                 if Bundle.main.fedoAPIKey == nil {

@@ -62,11 +62,14 @@ nonisolated struct AIModel: Decodable, Identifiable, Hashable, Sendable {
     var contextLabel: String? { contextLength.map(Self.formatContext) }
 
     /// USD-per-token string -> per-million label: "0.00000096" -> "$0.96", "0.000015" -> "$15",
-    /// "0" -> "Free", negative / missing / unparsable -> "Variable".
+    /// "0" -> "Free", under a cent per million -> "<$0.01",
+    /// negative / missing / unparsable -> "Variable".
     static func formatPrice(_ perToken: String?) -> String {
         guard let perToken, let value = Double(perToken), value.isFinite, value >= 0 else { return "Variable" }
         if value == 0 { return "Free" }
         let perMillion = value * 1_000_000
+        // Rounding to 4 decimals would print these as "$0"; say "cheap, but not free" instead.
+        if perMillion < 0.01 { return "<$0.01" }
         // Whole dollars drop the decimals; otherwise 2...4 fraction digits ("$0.96", "$0.075").
         let isWhole = (perMillion * 10_000).rounded().truncatingRemainder(dividingBy: 10_000) == 0
         let style = FloatingPointFormatStyle<Double>(locale: Locale(identifier: "en_US"))
@@ -79,6 +82,51 @@ nonisolated struct AIModel: Decodable, Identifiable, Hashable, Sendable {
         if tokens >= 1_000_000 { return "\(tokens / 1_000_000)M" }
         if tokens >= 1_000 { return "\(tokens / 1_000)K" }
         return "\(tokens)"
+    }
+}
+
+/// The models list's provider grouping and search rules. Plain functions so tests can cover them.
+nonisolated enum ModelFilter {
+    /// One entry of the provider filter menu.
+    nonisolated struct Provider: Identifiable, Hashable, Sendable {
+        /// Stable across refreshes: the lowest `providerID` of the ids sharing this display name.
+        let id: String
+        let name: String
+        let count: Int
+    }
+
+    /// providerID -> display name: `provider` of the group's first "Provider: Model" name, else the id.
+    /// Prefix-less names like "Claude Opus 5" inherit "Anthropic" from a sibling model.
+    static func providerNames(_ models: [AIModel]) -> [String: String] {
+        Dictionary(grouping: models, by: \.providerID).mapValues { group in
+            group.first { $0.name.contains(": ") }?.provider ?? group[0].providerID
+        }
+    }
+
+    /// Menu entries, most models first. Ids sharing a display name merge into one entry
+    /// (`meta` + `meta-llama` -> "Meta").
+    static func providers(_ models: [AIModel]) -> [Provider] {
+        let names = providerNames(models)
+        let groups: [String: [AIModel]] = Dictionary(grouping: models) { model in
+            names[model.providerID] ?? model.provider
+        }
+        let providers = groups.map { name, group in
+            Provider(id: group.map(\.providerID).min() ?? name, name: name, count: group.count)
+        }
+        return providers.sorted { $0.count != $1.count ? $0.count > $1.count : $0.name < $1.name }
+    }
+
+    /// Models whose name or id contains `search` and, when `providerID` is set, that belong to
+    /// its `Provider` entry — matched by display name, so both Meta ids filter together.
+    static func filter(_ models: [AIModel], search: String, providerID: String?) -> [AIModel] {
+        let names = providerNames(models)
+        let providerName = providerID.map { names[$0] ?? $0 }
+        let query = search.trimmingCharacters(in: .whitespaces)
+        return models.filter { model in
+            (providerName == nil || (names[model.providerID] ?? model.provider) == providerName)
+                && (query.isEmpty || model.name.localizedCaseInsensitiveContains(query)
+                    || model.id.localizedCaseInsensitiveContains(query))
+        }
     }
 }
 

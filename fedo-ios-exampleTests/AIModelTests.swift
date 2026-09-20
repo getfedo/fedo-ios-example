@@ -49,6 +49,20 @@ private let fixture = Data("""
       "pricing": {"prompt": "-1", "completion": "-1"}
     },
     {
+      "id": "meta/llama-guard-4",
+      "name": "Meta: Llama Guard 4",
+      "created": 1750000000,
+      "context_length": 163840,
+      "pricing": {"prompt": "0.00000002", "completion": "0.00000002"}
+    },
+    {
+      "id": "anthropic/claude-opus-5",
+      "name": "Claude Opus 5",
+      "created": 1790000000,
+      "context_length": 400000,
+      "pricing": {"prompt": "0.000005", "completion": "0.000025"}
+    },
+    {
       "id": "~moonshotai/kimi-latest",
       "name": "Kimi Latest",
       "created": 1787000000,
@@ -68,9 +82,11 @@ struct AIModelTests {
 
     @Test func decodesNewestFirst() throws {
         #expect(models.map(\.id) == [
+            "anthropic/claude-opus-5",
             "~anthropic/claude-sonnet-latest",
             "deepseek/deepseek-v4-pro",
             "~moonshotai/kimi-latest",
+            "meta/llama-guard-4",
             "meta-llama/llama-4-scout:free",
             "openrouter/auto",
         ])
@@ -101,6 +117,8 @@ struct AIModelTests {
         ("0.00000096", "$0.96"),
         ("0.000000075", "$0.075"),
         ("0.000015", "$15"),
+        // Below a cent per million: 4-decimal rounding would print "$0".
+        ("0.000000000005", "<$0.01"),
         ("0", "Free"),
         ("-1", "Variable"),
         ("abc", "Variable"),
@@ -126,8 +144,10 @@ struct AIModelTests {
         // "Provider: Name" -> provider from the name; providerID is always the lowercased id prefix.
         ("deepseek/deepseek-v4-pro", "DeepSeek", "deepseek", "DeepSeek V4 Pro"),
         ("meta-llama/llama-4-scout:free", "Meta", "meta-llama", "Llama 4 Scout (free)"),
+        ("meta/llama-guard-4", "Meta", "meta", "Llama Guard 4"),
         ("~anthropic/claude-sonnet-latest", "Anthropic", "anthropic", "Claude Sonnet Latest"),
         // No colon in the name -> id-prefix fallback, "~" stripped.
+        ("anthropic/claude-opus-5", "anthropic", "anthropic", "Claude Opus 5"),
         ("openrouter/auto", "openrouter", "openrouter", "Auto Router"),
         ("~moonshotai/kimi-latest", "moonshotai", "moonshotai", "Kimi Latest"),
     ])
@@ -136,5 +156,43 @@ struct AIModelTests {
         #expect(model.provider == provider)
         #expect(model.providerID == providerID)
         #expect(model.shortName == shortName)
+    }
+
+    @Test func providerNamesMergeIDsAndFillInMissingPrefixes() {
+        let names = ModelFilter.providerNames(models)
+        // Two ids, one display name.
+        #expect(names["meta"] == "Meta")
+        #expect(names["meta-llama"] == "Meta")
+        // "Claude Opus 5" carries no "Provider: " prefix; the group takes the name from a sibling.
+        #expect(names["anthropic"] == "Anthropic")
+        // Nothing in the group has a prefix -> the id stands in.
+        #expect(names["openrouter"] == "openrouter")
+    }
+
+    @Test func providerMenuEntriesMergeAndSortByCount() {
+        let providers = ModelFilter.providers(models)
+        #expect(providers == [
+            ModelFilter.Provider(id: "anthropic", name: "Anthropic", count: 2),
+            // One "Meta" entry for both ids, keyed by the lowest of them.
+            ModelFilter.Provider(id: "meta", name: "Meta", count: 2),
+            ModelFilter.Provider(id: "deepseek", name: "DeepSeek", count: 1),
+            ModelFilter.Provider(id: "moonshotai", name: "moonshotai", count: 1),
+            ModelFilter.Provider(id: "openrouter", name: "openrouter", count: 1),
+        ])
+    }
+
+    @Test func filtersBySearchAndProviderTogether() {
+        #expect(ModelFilter.filter(models, search: "", providerID: nil) == models)
+        // The "meta" entry covers both Meta ids.
+        #expect(ModelFilter.filter(models, search: "", providerID: "meta").map(\.id)
+            == ["meta/llama-guard-4", "meta-llama/llama-4-scout:free"])
+        // Search is trimmed, case-insensitive, and matches the id as well as the name.
+        #expect(ModelFilter.filter(models, search: "  LLAMA ", providerID: nil).map(\.id)
+            == ["meta/llama-guard-4", "meta-llama/llama-4-scout:free"])
+        #expect(ModelFilter.filter(models, search: "guard", providerID: "meta").map(\.id) == ["meta/llama-guard-4"])
+        // Both conditions must hold.
+        #expect(ModelFilter.filter(models, search: "guard", providerID: "deepseek").isEmpty)
+        // An id that is gone from the data matches nothing, so the view clears it after a load.
+        #expect(ModelFilter.filter(models, search: "", providerID: "mistralai").isEmpty)
     }
 }

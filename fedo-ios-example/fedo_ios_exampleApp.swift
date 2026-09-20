@@ -12,7 +12,9 @@ import SwiftUI
 struct fedo_ios_exampleApp: App {
     init() {
         guard let apiKey = Bundle.main.fedoAPIKey else {
+            #if DEBUG
             print("[ModelPulse] Fedo not initialized: no API key. Copy Config/Secrets.example.xcconfig to Config/Secrets.xcconfig and set FEDO_API_KEY.")
+            #endif
             return
         }
         #if DEBUG
