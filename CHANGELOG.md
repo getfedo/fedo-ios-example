@@ -9,6 +9,11 @@ Each release notes the FedoKit version it targets.
 
 ## [Unreleased]
 
+### Changed
+
+- FedoKit is pinned to `0.4.0-beta.1` (was `0.3.0-beta.1`).
+- Renamed for FedoKit `0.4.0-beta.1`: the feedback board view `FeedbacksView` is now `FedoFeedbackView`, and the submission sheet modifier `.presentCreateFeedback(isPresented:)` is now `.presentFedoCreateFeedback(isPresented:)`.
+
 ## [0.3.0] - 2026-09-15
 
 First release of ModelPulse. Targets FedoKit `0.3.0-beta.1`.

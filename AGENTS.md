@@ -145,7 +145,7 @@ CI: `.github/workflows/ci.yml` runs the same test command on macOS 26 / Xcode 26
 
 ## Architecture Overview
 
-ModelPulse is a SwiftUI demo of the Fedo iOS SDK (`FedoKit`, SPM, pinned to `0.3.0-beta.1`). It lists the newest AI models from the public OpenRouter API (`GET https://openrouter.ai/api/v1/models`, no key) and adds Fedo at natural moments. App sources live in `fedo-ios-example/`.
+ModelPulse is a SwiftUI demo of the Fedo iOS SDK (`FedoKit`, SPM, pinned to `0.4.0-beta.1`). It lists the newest AI models from the public OpenRouter API (`GET https://openrouter.ai/api/v1/models`, no key) and adds Fedo at natural moments. App sources live in `fedo-ios-example/`.
 
 - `fedo_ios_exampleApp.swift`: `@main`; initializes Fedo once in `init()`; defines `Bundle.fedoAPIKey` (Info.plist `FedoAPIKey`, trimmed, `nil` when empty).
 - `ContentView.swift`: root `TabView` with Models, Roadmap and Settings tabs, each in its own `NavigationStack`.
@@ -159,8 +159,8 @@ ModelPulse is a SwiftUI demo of the Fedo iOS SDK (`FedoKit`, SPM, pinned to `0.3
 Where each FedoKit API is used:
 
 - `Fedo.initialize(apiKey:config:)`: `fedo_ios_exampleApp.init()`, only when a key exists (`.debug` logs in DEBUG, `.none` in release).
-- `FeedbacksView()`: Roadmap tab in `ContentView`; without a key a "Fedo Not Configured" `StatusView` shows instead, because the uninitialized SDK renders blank.
-- `.presentCreateFeedback(isPresented:)`: `ModelsListView`, from "Missing a model? Request it" (no results) and "Report a Problem" (load error); buttons hidden without a key.
+- `FedoFeedbackView()`: Roadmap tab in `ContentView`; without a key a "Fedo Not Configured" `StatusView` shows instead, because the uninitialized SDK renders blank.
+- `.presentFedoCreateFeedback(isPresented:)`: `ModelsListView`, from "Missing a model? Request it" (no results) and "Report a Problem" (load error); buttons hidden without a key.
 - `Fedo.setUserProperty("favorite_provider", value:)`: `ModelsListView`, when a provider filter is picked.
 - `Fedo.setUserID` / `Fedo.setUserDisplayName` / `Fedo.setUserEmail`: `SettingsView` sign-in (ID is `"demo-" + email`; real apps pass their backend user ID).
 - `Fedo.logout()`: `SettingsView` sign-out.

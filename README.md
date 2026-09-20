@@ -66,7 +66,7 @@ No key yet? The app still builds and runs: the models list and detail work, the 
 | `FedoFeedbackView()` | [`ContentView.swift`](fedo-ios-example/ContentView.swift) | The Roadmap tab: the full feedback board. It pushes its own screens, so the tab wraps it in its own `NavigationStack`. |
 | `.presentFedoCreateFeedback(isPresented:)` | [`ModelsListView.swift`](fedo-ios-example/ModelsListView.swift) | Opens the feedback submission sheet from "Missing a model? Request it" in the No Results state and "Report a Problem" in the load error state. Both buttons appear only when a key is configured. |
 | `Fedo.setUserProperty("favorite_provider", value:)` | [`ModelsListView.swift`](fedo-ios-example/ModelsListView.swift) | Records the provider picked in the filter menu as a user property (last value wins). |
-| `Fedo.setUserID(_:)`<br>`Fedo.setUserDisplayName(_:)`<br>`Fedo.setUserEmail(_:)` | [`SettingsView.swift`](fedo-ios-example/SettingsView.swift) | Demo sign-in: identifies the user. Feedback, votes and comments made as a guest move to the signed-in account. |
+| `Fedo.setUserID(_:)`<br>`Fedo.setUserDisplayName(_:)`<br>`Fedo.setUserEmail(_:)` | [`SettingsView.swift`](fedo-ios-example/SettingsView.swift) | Demo sign-in: identifies the user. Feedback, votes and comments made as a guest move to the signed-in account. This demo derives the ID from the email, but real apps should pass their own backend user ID and keep PII out of it. |
 | `Fedo.logout()` | [`SettingsView.swift`](fedo-ios-example/SettingsView.swift) | Demo sign-out: clears the identity and starts a new anonymous user. |
 
 The full SDK guide is in the [Fedo docs](https://docs.getfedo.com/next/guide/getting-started/).
