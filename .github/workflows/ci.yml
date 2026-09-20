@@ -21,8 +21,30 @@ env:
   PACKAGES_DIR: build/SourcePackages
 
 jobs:
+  guard-api-key:
+    name: Guard against committed API key
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Check Config/Base.xcconfig has no committed key
+        run: |
+          if grep -vE '^\s*//' Config/Base.xcconfig | grep -E 'FEDO_API_KEY[[:space:]]*=[[:space:]]*[^[:space:]]'; then
+            echo "::error file=Config/Base.xcconfig::FEDO_API_KEY must stay empty in the committed Config/Base.xcconfig. Put your real key in the gitignored Config/Secrets.xcconfig (copy Config/Secrets.example.xcconfig) instead."
+            exit 1
+          fi
+
+      - name: Check Config/Secrets.xcconfig is not tracked
+        run: |
+          if git ls-files --error-unmatch Config/Secrets.xcconfig >/dev/null 2>&1; then
+            echo "::error file=Config/Secrets.xcconfig::Config/Secrets.xcconfig must never be committed (it holds your real Fedo API key, and .gitignore was bypassed, e.g. with git add -f). Remove it from git tracking and rotate the leaked key in the Fedo dashboard (https://app.getfedo.com) immediately."
+            exit 1
+          fi
+
   test:
     name: Build and test
+    needs: guard-api-key
     runs-on: macos-26
     timeout-minutes: 30
     steps:
@@ -40,10 +62,21 @@ jobs:
           key: spm-${{ runner.os }}-${{ hashFiles('fedo-ios-example.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
           restore-keys: spm-${{ runner.os }}-
 
+      - name: Pick simulator
+        id: sim
+        run: |
+          # Avoids pinning a device model (e.g. "iPhone 17") that a future runner image may drop;
+          # picks any available iPhone simulator on the newest installed iOS runtime instead.
+          UDID=$(xcrun simctl list devices available --json | jq -r \
+            '.devices | to_entries | map(select(.key | contains("SimRuntime.iOS"))) | sort_by(.key) | last | .value[] | select(.name | startswith("iPhone")) | .udid' \
+            | head -n1)
+          echo "Selected simulator UDID: $UDID"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+
       - name: Build and test
         run: |
           xcodebuild test \
             -scheme fedo-ios-example \
-            -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' \
+            -destination "platform=iOS Simulator,id=${{ steps.sim.outputs.udid }}" \
             -clonedSourcePackagesDirPath "$PACKAGES_DIR" \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO SWIFT_TREAT_WARNINGS_AS_ERRORS=YES
