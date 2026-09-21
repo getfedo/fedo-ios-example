@@ -9,10 +9,26 @@ Each release notes the FedoKit version it targets.
 
 ## [Unreleased]
 
+### Added
+
+- A Refresh button on the empty state: a list with no rows cannot bounce, so pull to refresh was never available there and the message no longer suggests it.
+- CI fails the build when `Config/Base.xcconfig` carries a non-empty `FEDO_API_KEY`, or when `Config/Secrets.xcconfig` is tracked at all.
+
 ### Changed
 
 - FedoKit is pinned to `0.4.0-beta.1` (was `0.3.0-beta.1`).
 - Renamed for FedoKit `0.4.0-beta.1`: the feedback board view `FeedbacksView` is now `FedoFeedbackView`, and the submission sheet modifier `.presentCreateFeedback(isPresented:)` is now `.presentFedoCreateFeedback(isPresented:)`.
+- Provider grouping and search moved out of the view into a `ModelFilter` type, covered by unit tests.
+- CI treats warnings as errors and picks an available iPhone simulator at run time instead of pinning a device model.
+- `Config/Secrets.example.xcconfig` points at the Fedo dashboard at `https://app.getfedo.com`, and the bug report form asks for FedoKit `0.4.0-beta.1`.
+
+### Fixed
+
+- Demo sign-in is disabled without a Fedo API key, where the SDK's identity calls would silently do nothing.
+- Only one models load runs at a time, so the initial load, pull to refresh and Retry no longer race each other.
+- The provider filter keeps working after a refresh that renames or drops a provider, because it now stores a stable provider ID.
+- Prices below a cent show as `<$0.01` instead of `$0`.
+- The "Fedo not initialized" hint prints only in Debug builds.
 
 ## [0.3.0] - 2026-09-15
 
