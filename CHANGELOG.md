@@ -9,6 +9,10 @@ Each release notes the FedoKit version it targets.
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-09-21
+
+Targets FedoKit `0.4.0-beta.1`.
+
 ### Added
 
 - A Refresh button on the empty state: a list with no rows cannot bounce, so pull to refresh was never available there and the message no longer suggests it.
@@ -29,6 +33,9 @@ Each release notes the FedoKit version it targets.
 - The provider filter keeps working after a refresh that renames or drops a provider, because it now stores a stable provider ID.
 - Prices below a cent show as `<$0.01` instead of `$0`.
 - The "Fedo not initialized" hint prints only in Debug builds.
+
+[Unreleased]: https://github.com/getfedo/fedo-ios-example/compare/0.4.0...HEAD
+[0.4.0]: https://github.com/getfedo/fedo-ios-example/releases/tag/0.4.0
 
 ## [0.3.0] - 2026-09-15
 
