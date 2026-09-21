@@ -9,7 +9,7 @@ import FedoKit
 import SwiftUI
 
 @main
-struct fedo_ios_exampleApp: App {
+struct ModelPulseApp: App {
     init() {
         guard let apiKey = Bundle.main.fedoAPIKey else {
             #if DEBUG
