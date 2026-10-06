@@ -21,20 +21,24 @@ SwiftUI and Foundation only; FedoKit is the single dependency.
 
 ## Screenshots
 
-| Latest models | Provider filter | Model detail | Settings |
-| --- | --- | --- | --- |
-| <img src="docs/images/models-list.jpg" width="180" alt="Latest Models list"> | <img src="docs/images/provider-filter.jpg" width="180" alt="Provider filter menu"> | <img src="docs/images/model-detail.jpg" width="180" alt="Model detail screen"> | <img src="docs/images/settings.jpg" width="180" alt="Settings with demo account signed in"> |
+| Latest models | Provider filter | Model detail |
+| --- | --- | --- |
+| <img src="docs/images/models-list.jpg" width="200" alt="Latest Models list"> | <img src="docs/images/provider-filter.jpg" width="200" alt="Provider filter menu"> | <img src="docs/images/model-detail.jpg" width="200" alt="Model detail screen"> |
+
+| Roadmap (Fedo) | New feedback (Fedo) | Settings |
+| --- | --- | --- |
+| <img src="docs/images/roadmap.jpg" width="200" alt="Fedo feedback board in the Roadmap tab"> | <img src="docs/images/create-feedback.jpg" width="200" alt="Fedo new feedback form"> | <img src="docs/images/settings.jpg" width="200" alt="Settings with Fedo initialized and demo account signed in"> |
 
 <details>
 <summary>Dark appearance</summary>
 
-| Latest models | Model detail |
-| --- | --- |
-| <img src="docs/images/models-list-dark.jpg" width="180" alt="Latest Models list in dark appearance"> | <img src="docs/images/model-detail-dark.jpg" width="180" alt="Model detail screen in dark appearance"> |
+| Latest models | Model detail | Roadmap (Fedo) |
+| --- | --- | --- |
+| <img src="docs/images/models-list-dark.jpg" width="200" alt="Latest Models list in dark appearance"> | <img src="docs/images/model-detail-dark.jpg" width="200" alt="Model detail screen in dark appearance"> | <img src="docs/images/roadmap-dark.jpg" width="200" alt="Fedo feedback board in dark appearance"> |
 
 </details>
 
-Captured on an iPhone 17 simulator without a Fedo API key.
+Captured on an iPhone 17 Pro simulator with the demo Fedo API key.
 
 ## Requirements
 
