@@ -41,7 +41,7 @@ Captured on an iPhone 17 simulator without a Fedo API key.
 - Xcode 26 or later
 - iOS 16 or later
 - Swift 6
-- [FedoKit](https://github.com/getfedo/fedo-ios) `0.4.0-beta.1`, resolved by Xcode through Swift Package Manager
+- [FedoKit](https://github.com/getfedo/fedo-ios) `0.4.0-beta.2`, resolved by Xcode through Swift Package Manager
 
 ## Quick start
 

@@ -9,6 +9,12 @@ Each release notes the FedoKit version it targets.
 
 ## [Unreleased]
 
+Targets FedoKit `0.4.0-beta.2`.
+
+### Changed
+
+- FedoKit is pinned to `0.4.0-beta.2` (was `0.4.0-beta.1`), and the bug report form asks for it.
+
 ## [0.4.0] - 2026-09-21
 
 Targets FedoKit `0.4.0-beta.1`.
