@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		89EF972F30750C8E00ED4817 /* FedoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 89EF972E30750C8E00ED4817 /* FedoKit */; };
+		89AF34B8307B40B100091AE3 /* FedoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 89AF34B7307B40B100091AE3 /* FedoKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89EF972F30750C8E00ED4817 /* FedoKit in Frameworks */,
+				89AF34B8307B40B100091AE3 /* FedoKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,7 +129,7 @@
 			);
 			name = "fedo-ios-example";
 			packageProductDependencies = (
-				89EF972E30750C8E00ED4817 /* FedoKit */,
+				89AF34B7307B40B100091AE3 /* FedoKit */,
 			);
 			productName = "fedo-ios-example";
 			productReference = 89861F3F3059283D00166042 /* fedo-ios-example.app */;
@@ -166,7 +166,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2650;
-				LastUpgradeCheck = 2650;
+				LastUpgradeCheck = 2700;
 				TargetAttributes = {
 					89861F3E3059283D00166042 = {
 						CreatedOnToolsVersion = 26.5;
@@ -187,7 +187,7 @@
 			mainGroup = 89861F363059283D00166042;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				89EF972D30750C8E00ED4817 /* XCRemoteSwiftPackageReference "fedo-ios" */,
+				89AF34B6307B40B100091AE3 /* XCRemoteSwiftPackageReference "fedo-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 89861F403059283D00166042 /* Products */;
@@ -302,6 +302,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -359,6 +360,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -382,6 +384,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -417,6 +420,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -442,6 +446,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QB5ZA9QZU7;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 0.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fedo.fedo-ios-exampleTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -463,6 +468,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QB5ZA9QZU7;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = "$(RECOMMENDED_IPHONEOS_DEPLOYMENT_TARGET)";
 				MARKETING_VERSION = 0.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.fedo.fedo-ios-exampleTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -509,20 +515,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		89EF972D30750C8E00ED4817 /* XCRemoteSwiftPackageReference "fedo-ios" */ = {
+		89AF34B6307B40B100091AE3 /* XCRemoteSwiftPackageReference "fedo-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getfedo/fedo-ios";
 			requirement = {
 				kind = exactVersion;
-				version = "0.4.0-beta.2";
+				version = "0.4.0-beta.3";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		89EF972E30750C8E00ED4817 /* FedoKit */ = {
+		89AF34B7307B40B100091AE3 /* FedoKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 89EF972D30750C8E00ED4817 /* XCRemoteSwiftPackageReference "fedo-ios" */;
+			package = 89AF34B6307B40B100091AE3 /* XCRemoteSwiftPackageReference "fedo-ios" */;
 			productName = FedoKit;
 		};
 /* End XCSwiftPackageProductDependency section */
