@@ -9,13 +9,15 @@ Each release notes the FedoKit version it targets.
 
 ## [Unreleased]
 
+
+## [0.4.0] - 2026-10-17
+
 ### Changed
 
-- FedoKit is pinned to `0.4.0-beta.3` (was `0.4.0-beta.2`), and the bug report form asks for it.
+- Update fedo iOS package to version 0.4.0 - The first official stable version. It has the same features as android latest 0.4.3 version
 
-## [0.4.0] - 2026-09-21
+## [0.4.0-beta.[1..3]] - 2026-09-21
 
-Targets FedoKit `0.4.0-beta.1`.
 
 ### Added
 

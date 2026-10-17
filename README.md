@@ -4,7 +4,7 @@ A small SwiftUI app that tracks the newest AI models and shows how to add in-app
 
 [![CI](https://github.com/getfedo/fedo-ios-example/actions/workflows/ci.yml/badge.svg)](https://github.com/getfedo/fedo-ios-example/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![Platform: iOS 16+](https://img.shields.io/badge/platform-iOS%2016%2B-lightgrey.svg)
+![Platform: iOS 17+](https://img.shields.io/badge/platform-iOS%2017%2B-lightgrey.svg)
 ![Swift 6](https://img.shields.io/badge/Swift-6-orange.svg)
 
 ## What it shows
@@ -43,9 +43,9 @@ Captured on an iPhone 17 Pro simulator with the demo Fedo API key.
 ## Requirements
 
 - Xcode 26 or later
-- iOS 16 or later
+- iOS 17 or later
 - Swift 6
-- [FedoKit](https://github.com/getfedo/fedo-ios) `0.4.0-beta.3`, resolved by Xcode through Swift Package Manager
+- [FedoKit](https://github.com/getfedo/fedo-ios) `0.4.0`, resolved by Xcode through Swift Package Manager
 
 ## Quick start
 

@@ -145,7 +145,7 @@ CI: `.github/workflows/ci.yml` runs the same test command on macOS 26 / Xcode 26
 
 ## Architecture Overview
 
-ModelPulse is a SwiftUI demo of the Fedo iOS SDK (`FedoKit`, SPM, pinned to `0.4.0-beta.3`). It lists the newest AI models from the public OpenRouter API (`GET https://openrouter.ai/api/v1/models`, no key) and adds Fedo at natural moments. App sources live in `fedo-ios-example/`.
+ModelPulse is a SwiftUI demo of the Fedo iOS SDK (`FedoKit`, SPM, pinned to `0.4.0`). It lists the newest AI models from the public OpenRouter API (`GET https://openrouter.ai/api/v1/models`, no key) and adds Fedo at natural moments. App sources live in `fedo-ios-example/`.
 
 - `fedo_ios_exampleApp.swift`: `@main`; initializes Fedo once in `init()`; defines `Bundle.fedoAPIKey` (Info.plist `FedoAPIKey`, trimmed, `nil` when empty).
 - `ContentView.swift`: root `TabView` with Models, Roadmap and Settings tabs, each in its own `NavigationStack`.
@@ -167,7 +167,7 @@ Where each FedoKit API is used:
 
 ## Conventions & Patterns
 
-- **iOS 16.0 deployment target**: no iOS 17+ APIs (`ContentUnavailableView`, `@Observable`, `onChange(of:initial:)`, `navigationDestination(item:)`, ...) without an `#available` check. Use `@State`, `ObservableObject` and `.task`.
+- **iOS 17.0 deployment target** (FedoKit requires iOS 17): no iOS 18+ APIs without an `#available` check. The code still uses `@State`, `ObservableObject` and `.task`; keep it that way unless there is a reason to change.
 - **Swift 6 with default MainActor isolation** (`SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`, approachable concurrency): code is main-actor unless marked otherwise. Models and networking are `nonisolated` (+ `Sendable`); off-main work uses `@concurrent` (see `OpenRouter.fetchModels()`).
 - **SwiftUI + Foundation only**: no dependencies beyond FedoKit.
 - **Synchronized folders**: `fedo-ios-example/` and `fedo-ios-exampleTests/` are file-system synchronized groups, so new `.swift` files compile without a `project.pbxproj` edit. Keep non-source files (xcconfig, plist, fixtures) out of them unless you handle target membership.
