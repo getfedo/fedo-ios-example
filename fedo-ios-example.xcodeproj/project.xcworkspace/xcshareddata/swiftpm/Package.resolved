@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/getfedo/fedo-ios",
       "state" : {
-        "revision" : "7d18347928535679edf5fc4330a979425d9e9f18",
-        "version" : "0.4.0-beta.3"
+        "revision" : "b4c4131116457f81fa04573dbd6da97a2df299b2",
+        "version" : "0.4.0"
       }
     }
   ],

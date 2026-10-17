@@ -17,10 +17,15 @@ struct ModelPulseApp: App {
             #endif
             return
         }
+        print("apikey=\(apiKey)")
         #if DEBUG
-        Fedo.initialize(apiKey: apiKey, config: FedoConfig(logLevel: .debug))
+        Fedo.initialize(apiKey: apiKey, config: .init(
+            logHandler: { logEntry in
+                print("Fedo[\(logEntry.level)]: \(logEntry.message)")
+            }
+        ))
         #else
-        Fedo.initialize(apiKey: apiKey, config: FedoConfig(logLevel: .none))
+        Fedo.initialize(apiKey: apiKey)
         #endif
     }
 

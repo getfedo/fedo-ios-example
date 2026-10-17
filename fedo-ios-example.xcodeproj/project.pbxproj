@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		89AF34B8307B40B100091AE3 /* FedoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 89AF34B7307B40B100091AE3 /* FedoKit */; };
+		89D19D223083693A00C6280C /* FedoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 89D19D213083693A00C6280C /* FedoKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89AF34B8307B40B100091AE3 /* FedoKit in Frameworks */,
+				89D19D223083693A00C6280C /* FedoKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,7 +129,7 @@
 			);
 			name = "fedo-ios-example";
 			packageProductDependencies = (
-				89AF34B7307B40B100091AE3 /* FedoKit */,
+				89D19D213083693A00C6280C /* FedoKit */,
 			);
 			productName = "fedo-ios-example";
 			productReference = 89861F3F3059283D00166042 /* fedo-ios-example.app */;
@@ -187,7 +187,7 @@
 			mainGroup = 89861F363059283D00166042;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				89AF34B6307B40B100091AE3 /* XCRemoteSwiftPackageReference "fedo-ios" */,
+				89D19D203083693A00C6280C /* XCRemoteSwiftPackageReference "fedo-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 89861F403059283D00166042 /* Products */;
@@ -515,20 +515,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		89AF34B6307B40B100091AE3 /* XCRemoteSwiftPackageReference "fedo-ios" */ = {
+		89D19D203083693A00C6280C /* XCRemoteSwiftPackageReference "fedo-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/getfedo/fedo-ios";
 			requirement = {
-				kind = exactVersion;
-				version = "0.4.0-beta.3";
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		89AF34B7307B40B100091AE3 /* FedoKit */ = {
+		89D19D213083693A00C6280C /* FedoKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 89AF34B6307B40B100091AE3 /* XCRemoteSwiftPackageReference "fedo-ios" */;
+			package = 89D19D203083693A00C6280C /* XCRemoteSwiftPackageReference "fedo-ios" */;
 			productName = FedoKit;
 		};
 /* End XCSwiftPackageProductDependency section */
