@@ -53,7 +53,7 @@ struct ModelsListView: View {
         .refreshable { await load() }
         .searchable(text: $searchText)
         .toolbar { providerMenu }
-        .onChange(of: selectedProvider) { provider in
+        .onChange(of: selectedProvider) { _, provider in
             // User-level property: last value wins. Report the display name, not the internal id.
             if let provider { Fedo.setUserProperty("favorite_provider", value: providerNames[provider] ?? provider) }
         }
